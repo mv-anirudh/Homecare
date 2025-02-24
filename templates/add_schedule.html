@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Form Container -->
+        <div class="bg-white rounded-lg shadow-sm p-6 sm:p-8">
+            <!-- Form Header -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-900">Set Your Availability</h2>
+                <p class="mt-2 text-sm text-gray-600">Choose your working hours for each day of the week.</p>
+            </div>
+
+            <!-- Form -->
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <div class="space-y-1">
+                    <!-- Field Label -->
+                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                        {{ field.label }}
+                        {% if field.field.required %}
+                            <span class="text-red-500">*</span>
+                        {% endif %}
+                    </label>
+
+                    <!-- Field Input -->
+                    <div class="mt-1">
+                        {% if field.field.widget_type == 'select' %}
+                            <div class="relative">
+                                {{ field }}
+                            </div>
+                        {% elif field.field.widget_type == 'checkbox' %}
+                            <div class="flex items-center">
+                                {{ field}}
+                                <span class="ml-2 text-sm text-gray-600">{{ field.help_text }}</span>
+                            </div>
+                        {% elif field.field.widget_type == 'time' %}
+                            {{ field }}
+                        {% else %}
+                            {{ field }}
+                        {% endif %}
+                    </div>
+
+                    <!-- Field Error -->
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    <!-- Field Help Text -->
+                    {% if field.help_text and field.field.widget_type != 'checkbox' %}
+                        <p class="mt-1 text-sm text-gray-500">{{ field.help_text }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <!-- Form Errors -->
+                {% if form.non_field_errors %}
+                    <div class="rounded-md bg-red-50 p-4 mt-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-red-800">Please correct the following errors:</h3>
+                                <div class="mt-2 text-sm text-red-700">
+                                    <ul class="list-disc space-y-1 pl-5">
+                                        {% for error in form.non_field_errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Submit Button -->
+                <div class="pt-4">
+                    <button type="submit" 
+                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                        Save Schedule
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

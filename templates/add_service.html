@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="p-6">
+        <h2 class="text-2xl font-bold mb-6">Add Service</h2>
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+            <div class="bg-red-50 text-red-500 p-3 rounded-lg">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+            
+            {% if form.errors %}
+            <div class="bg-red-50 text-red-500 p-3 rounded-lg mb-4">
+                Please correct the errors below.
+            </div>
+            {% endif %}
+
+            <div class="mb-4">
+                <label for="id_category" class="block text-sm font-medium text-gray-700">Category</label>
+                {{ form.category }}
+                {% if form.category.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.category.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <label for="id_name" class="block text-sm font-medium text-gray-700">Service Name</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.name.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <label for="id_description" class="block text-sm font-medium text-gray-700">Description</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.description.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <label for="id_base_price" class="block text-sm font-medium text-gray-700">Price</label>
+                {{ form.base_price }}
+                {% if form.base_price.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.base_price.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <label for="id_image" class="block text-sm font-medium text-gray-700">Image</label>
+                {{ form.image }}
+                {% if form.image.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.image.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                Add Service
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

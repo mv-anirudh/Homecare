@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareConnect - Care Management Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        .slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+        
+        .scale-in {
+            animation: scaleIn 0.6s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-sm py-4 px-6 md:px-12">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-3xl font-bold">
+                <span class="text-gray-800">Care</span><span class="text-teal-500">Connect</span>
+            </a>
+            <div class="hidden md:flex space-x-6">
+                <a href="#" class="text-gray-600 hover:text-teal-500 transition">Home</a>
+                <a href="#" class="text-gray-600 hover:text-teal-500 transition">Features</a>
+                <a href="#" class="text-gray-600 hover:text-teal-500 transition">For Clients</a>
+                <a href="#" class="text-gray-600 hover:text-teal-500 transition">For Caregivers</a>
+                <a href="#" class="text-gray-600 hover:text-teal-500 transition">About</a>
+            </div>
+            <a href="{% url 'accounts:signin' %}" class="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition shadow-md">
+                Login
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="container mx-auto px-6 md:px-12 py-16 md:py-24 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 fade-in">
+            <span class="text-gray-800">Care</span><span class="text-teal-500">Connect</span>
+        </h1>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-3 slide-up">
+            Connecting compassionate caregivers with those who need them most.
+        </p>
+        <p class="text-lg text-gray-500 max-w-3xl mx-auto mb-12 slide-up" style="animation-delay: 0.2s">
+            Experience a new standard in care management.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4 scale-in" style="animation-delay: 0.3s">
+            <a href="#" class="bg-teal-500 text-white px-6 py-3 rounded-md hover:bg-teal-600 transition shadow-md">
+                Get Started
+            </a>
+            <a href="#" class="bg-white text-gray-800 px-6 py-3 rounded-md border border-gray-300 hover:bg-gray-50 transition shadow-sm">
+                Learn More
+            </a>
+        </div>
+    </header>
+
+    <!-- Choose Your Path Section -->
+    <section class="container mx-auto px-6 md:px-12 py-16 text-center">
+        <h2 class="text-3xl font-bold mb-4 fade-in">Choose Your Path</h2>
+        <p class="text-gray-600 mb-16 slide-up">Select your role to get started</p>
+        
+        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <!-- For Clients -->
+            <div class="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition scale-in" style="animation-delay: 0.1s">
+                <h3 class="text-2xl font-bold mb-6">Find Your Perfect Caregiver</h3>
+                <p class="text-gray-600 mb-8">Browse through our network of qualified caregivers and find the perfect match for your needs.</p>
+                <button class="bg-teal-500 text-white px-5 py-2 rounded-md hover:bg-teal-600 transition">
+                    Register as Client
+                </button>
+            </div>
+            
+            <!-- For Caregivers -->
+            <div class="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition scale-in" style="animation-delay: 0.3s">
+                <h3 class="text-2xl font-bold mb-6">Offer Your Caregiving Services</h3>
+                <p class="text-gray-600 mb-8">Join our platform to connect with clients who need your specialized care services.</p>
+                <button class="bg-white text-teal-500 px-5 py-2 rounded-md border border-teal-500 hover:bg-teal-50 transition">
+                    Register as Caregiver
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="container mx-auto px-6 md:px-12 py-16 text-center bg-white">
+        <h2 class="text-3xl font-bold mb-4 fade-in">Why Choose Us</h2>
+        <p class="text-gray-600 mb-16 slide-up">Discover the features that make our platform unique</p>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Feature 1 -->
+            <div class="feature-card bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+                <div class="bg-teal-50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-user-circle text-teal-500 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4">Profile Management</h3>
+                <p class="text-gray-600">Create and manage detailed profiles for clients and caretakers.</p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="feature-card bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+                <div class="bg-teal-50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-calendar-alt text-teal-500 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4">Smart Scheduling</h3>
+                <p class="text-gray-600">Book and manage appointments with real-time availability.</p>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="feature-card bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+                <div class="bg-teal-50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-shield-alt text-teal-500 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4">Secure Platform</h3>
+                <p class="text-gray-600">Your data is protected with enterprise-grade security.</p>
+            </div>
+            
+            <!-- Feature 4 -->
+            <div class="feature-card bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+                <div class="bg-teal-50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-heart text-teal-500 text-xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4">Quality Care</h3>
+                <p class="text-gray-600">Connect with verified and experienced caregivers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="container mx-auto px-6 md:px-12 py-16 text-center">
+        <h2 class="text-3xl font-bold mb-4 fade-in">Ready to Get Started?</h2>
+        <p class="text-gray-600 max-w-3xl mx-auto mb-12 slide-up">
+            Join our community today and experience the difference of personalized care management.
+        </p>
+        <a href="#" class="bg-teal-500 text-white px-6 py-3 rounded-md hover:bg-teal-600 transition shadow-md inline-block scale-in">
+            Create Your Account
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-xl font-bold mb-4">
+                        <span>Care</span><span class="text-teal-400">Connect</span>
+                    </h4>
+                    <p class="text-gray-400">Revolutionizing care management through technology and compassion.</p>
+                </div>
+                
+                <div>
+                    <h5 class="font-semibold mb-4">Quick Links</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-teal-400 transition">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-teal-400 transition">For Clients</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-teal-400 transition">For Caregivers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-teal-400 transition">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="font-semibold mb-4">Resources</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-teal-400 transition">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-teal-400 transition">Support</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-teal-400 transition">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-teal-400 transition">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="font-semibold mb-4">Contact</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-envelope mr-2"></i> support@careconnect.com</li>
+                        <li><i class="fas fa-phone mr-2"></i> (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> 123 Care Street, Health City</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400">© 2025 CareConnect. All rights reserved.</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-teal-400 transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-teal-400 transition"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-teal-400 transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-teal-400 transition"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in, .slide-up, .scale-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = "1";
+                        entry.target.style.transform = "translateY(0) scale(1)";
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            fadeElements.forEach(el => {
+                el.style.opacity = "0";
+                observer.observe(el);
+            });
+            
+            // Feature cards hover effect
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.classList.add('shadow-md');
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.classList.remove('shadow-md');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

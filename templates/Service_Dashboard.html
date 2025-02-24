@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen bg-teal-50 p-6">
+    <!-- Booking Requests Section -->
+    <div class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-800">Booking Requests</h2>
+        <div class="space-y-4">
+            {% for booking in recent_bookings %}
+            <div class="bg-white rounded-lg shadow p-4">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <h3 class="font-medium text-lg">{{ booking.customer.get_full_name }}</h3>
+                        <p class="text-gray-500">booking date and time: {{ booking.booking_date|date:"Y-m-d" }} at {{ booking.booking_time|time:"H:i" }}</p>
+                        <p class="text-gray-500">Location: {{ booking.service_location}}</p>
+                        <p class="text-gray-500">Address: {{ booking.customer.address}}</p>
+                        <p class="text-gray-500">{{ booking.customer.phone_number}}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <a href="{}" 
+                           class="px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-600 transition-colors">
+                            Update Status
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Schedule Section (commented out in original) -->
+    <!-- Schedule section commented out code remains unchanged -->
+
+    <!-- Management Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Profile Management -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center mb-4">
+                <svg class="w-6 h-6 text-teal-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <h3 class="text-xl font-semibold text-gray-800">Profile Management</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Update your personal information and service details</p>
+            <a href="" 
+               class="block w-full px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-600 transition-colors text-center">
+                Edit Profile
+            </a>
+        </div>
+
+        <!-- Schedule Management (renamed from Certifications) -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center mb-4">
+                <svg class="w-6 h-6 text-teal-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.0 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.0z" />
+                </svg>
+                <h3 class="text-xl font-semibold text-gray-800">Add Schedule</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Manage your Schedule</p>
+            <a href="{% url 'services:shedule_add'%}"
+               class="block w-full px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-600 transition-colors text-center">
+                Update Schedule
+            </a>
+        </div>
+
+        <!-- Service Listings -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center mb-4">
+                <svg class="w-6 h-6 text-teal-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+                <h3 class="text-xl font-semibold text-gray-800">Service Listings</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Add or modify your available services and pricing</p>
+            <a href="{% url 'services:service_add'%}"
+               class="block w-full px-4 py-2 bg-teal-500 text-white rounded hover:bg-teal-600 transition-colors text-center">
+                Manage Services
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

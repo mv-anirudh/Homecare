@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareConnect - Schedule Service</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        {% block content %}
+
+        {% if request.resolver_match.url_name == 'create_booking' %}
+        <!-- Booking Form -->
+        <div class="max-w-md mx-auto bg-white shadow-sm rounded-lg overflow-hidden">
+            <div class="p-6">
+                <h2 class="text-2xl font-bold mb-6 text-gray-900">Schedule Care Service</h2>
+
+                <!-- Service Information -->
+                <div class="mb-6 p-4 bg-teal-50 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-2 text-gray-900">Service Information</h3>
+                    <div class="space-y-2">
+                        <p class="flex justify-between">
+                            <span class="text-gray-600">Service:</span>
+                            <span class="font-medium">{{ service.name }}</span>
+                        </p>
+                        <p class="flex justify-between">
+                            <span class="text-gray-600">Caregiver:</span>
+                            <span class="font-medium">{{ service.provider.business_name }}</span>
+                        </p>
+                        <p class="flex justify-between">
+                            <span class="text-gray-600">Rate:</span>
+                            <span class="font-medium">${{ service.base_price }}/hr</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Display Error Messages -->
+                {% if form.errors %}
+                <div class="bg-red-50 text-red-500 p-3 rounded-lg mb-4">
+                    <strong>Please correct the errors below:</strong>
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+
+                <form method="post" class="space-y-4">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    
+                    <button type="submit" class="w-full bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition">
+                        Confirm Schedule
+                    </button>
+                </form>
+                
+                <div class="mt-6 text-sm text-gray-500 flex items-start">
+                    <svg class="w-5 h-5 mr-2 text-teal-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p>All caregivers are thoroughly vetted and background-checked to ensure your safety and peace of mind.</p>
+                </div>
+            </div>
+        </div>
+
+        {% else %}
+        <!-- Booking Confirmation -->
+        <div class="max-w-md mx-auto bg-white shadow-sm rounded-lg overflow-hidden">
+            <div class="p-6 text-center">
+                <div class="flex justify-center mb-4">
+                    <div class="bg-teal-500 text-white rounded-full p-2 inline-block">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h2 class="text-2xl font-bold mb-4 text-gray-900">Care Service Scheduled!</h2>
+
+                <!-- Service Details -->
+                <div class="text-left mb-4">
+                    <h3 class="font-semibold text-lg mb-2 text-gray-900">Service Details</h3>
+                    <div class="space-y-2">
+                        <p class="flex justify-between">
+                            <span class="text-gray-600">Service:</span>
+                            <span class="font-medium">{{ booking.service.name }}</span>
+                        </p>
+                        <p class="flex justify-between">
+                            <span class="text-gray-600">Caregiver:</span>
+                            <span class="font-medium">{{ booking.provider.business_name }}</span>
+                        </p>
+                        <p class="flex justify-between">
+                            <span class="text-gray-600">Total Fee:</span>
+                            <span class="font-medium">${{ booking.total_amount }}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Appointment Details -->
+                <div class="text-left mb-4">
+                    <h3 class="font-semibold text-lg mb-2 text-gray-900">Care Session Details</h3>
+                    <div class="space-y-2">
+                        <p class="flex justify-between">
+                            <span class="text-gray-600">Date:</span>
+                            <span class="font-medium">{{ booking.booking_date|date:"l, F j, Y" }}</span>
+                        </p>
+                        <p class="flex justify-between">
+                            <span class="text-gray-600">Time:</span>
+                            <span class="font-medium">{{ booking.booking_time|time:"g:i A" }}</span>
+                        </p>
+                        <p class="flex justify-between">
+                            <span class="text-gray-600">Location:</span>
+                            <span class="font-medium">{{ booking.service_location }}</span>
+                        </p>
+                        <p class="flex justify-between">
+                            <span class="text-gray-600">Status:</span>
+                            <span class="font-medium text-teal-700">{{ booking.get_status_display }}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Special Instructions -->
+                {% if booking.special_instructions %}
+                <div class="text-left mb-4">
+                    <h3 class="font-semibold text-lg mb-2 text-gray-900">Care Instructions</h3>
+                    <p class="text-gray-600 bg-gray-50 p-3 rounded-lg">{{ booking.special_instructions }}</p>
+                </div>
+                {% endif %}
+
+                <p class="text-sm text-gray-500 mb-6">A confirmation email has been sent with your care service details. Your caregiver will contact you prior to the appointment.</p>
+
+                <!-- Navigation Buttons -->
+                <div class="flex space-x-4 justify-center">
+                    <a href="{% url 'services:home' %}" class="bg-teal-600 text-white px-5 py-2 rounded-lg hover:bg-teal-700 transition">
+                        Return to Home
+                    </a>
+                    <a href="{% url 'services:my_bookings' %}" class="bg-gray-200 text-gray-700 px-5 py-2 rounded-lg hover:bg-gray-300 transition">
+                        My Care Schedule
+                    </a>
+                </div>
+
+                <!-- Display Messages -->
+                {% if messages %}
+                <div class="messages mt-6">
+                    {% for message in messages %}
+                        <div class="{% if message.tags == 'error' %}bg-red-50 text-red-500{% else %}bg-teal-50 text-teal-700{% endif %} p-3 rounded-lg">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        {% endblock %}
+    </div>
+
+    <!-- Input Styling -->
+    <style>
+        input[type="time"],
+        input[type="date"],
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            outline: none;
+        }
+        input:focus,
+        textarea:focus {
+            border-color: #0d9488;
+            box-shadow: 0 0 4px rgba(13, 148, 136, 0.5);
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #4b5563;
+        }
+    </style>
+</body>
+</html>

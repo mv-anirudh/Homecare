@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-[#f8f9fe] py-8">
+    <div class="w-full max-w-2xl bg-white rounded-lg p-8 mx-4 md:mx-0">
+        <h2 class="text-2xl font-semibold text-center text-[#14B8A6] mb-2">Create Account</h2>
+        <p class="text-center text-gray-500 mb-6">Sign up for a new account</p>
+        
+        <form action="" method="post" enctype="multipart/form-data" class="space-y-5">
+            {% csrf_token %}
+            
+            <!-- Account Information Section -->
+            <div class="space-y-5">
+                <h3 class="text-lg font-medium text-gray-900">Account Information</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Username -->
+                    <div>
+                        <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.username.errors }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Email -->
+                    <div>
+                        <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.email.errors }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Password -->
+                    <div>
+                        <label for="{{ form.password1.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        {{ form.password1 }}
+                        {% if form.password1.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.password1.errors }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password Confirmation -->
+                    <div>
+                        <label for="{{ form.password2.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                        {{ form.password2 }}
+                        {% if form.password2.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.password2.errors }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Information Section -->
+            <div class="space-y-5 pt-6">
+                <h3 class="text-lg font-medium text-gray-900">Personal Information</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- First Name -->
+                    <div>
+                        <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.first_name.errors }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Last Name -->
+                    <div>
+                        <label for="{{ form.last_name.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.last_name.errors }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- User Type -->
+                <div>
+                    <label for="{{ form.user_type.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">User Type</label>
+                    {{ form.user_type }}
+                    {% if form.user_type.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.user_type.errors }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Contact Information -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Phone Number -->
+                    <div>
+                        <label for="{{ form.phone_number.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                        {{ form.phone_number }}
+                        {% if form.phone_number.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.phone_number.errors }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Preferred Communication -->
+                    <div>
+                        <label for="{{ form.preferred_communication.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Preferred Communication</label>
+                        {{ form.preferred_communication }}
+                        {% if form.preferred_communication.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.preferred_communication.errors }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Address Information -->
+                <div class="space-y-5">
+                    <div>
+                        <label for="{{ form.address.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                        {{ form.address }}
+                        {% if form.address.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.address.errors }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div>
+                            <label for="{{ form.city.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                            {{ form.city }}
+                            {% if form.city.errors %}
+                                <p class="text-red-500 text-sm mt-1">{{ form.city.errors }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <label for="{{ form.state.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">State</label>
+                            {{ form.state }}
+                            {% if form.state.errors %}
+                                <p class="text-red-500 text-sm mt-1">{{ form.state.errors }}</p>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <label for="{{ form.zip_code.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">ZIP Code</label>
+                            {{ form.zip_code }}
+                            {% if form.zip_code.errors %}
+                                <p class="text-red-500 text-sm mt-1">{{ form.zip_code.errors }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Information -->
+                <div class="space-y-5">
+                    <div>
+                        <label for="{{ form.profile_picture.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Profile Picture</label>
+                        {{ form.profile_picture }}
+                        {% if form.profile_picture.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.profile_picture.errors }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.bio.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Bio</label>
+                        {{ form.bio }}
+                        {% if form.bio.errors %}
+                            <p class="text-red-500 text-sm mt-1">{{ form.bio.errors }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-[#14B8A6] hover:bg-[#14B8A6] text-white font-semibold py-3 px-4 rounded-lg transition-colors">
+                Register
+            </button>
+        </form>
+
+        <p class="text-center text-gray-500 mt-6">
+            Already have an account? 
+            <a href="{% url 'accounts:signin' %}" class="text-[#14B8A6] hover:text-[#1345d2] font-medium">Login here</a>
+        </p>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    /* Style form inputs */
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="password"],
+    form input[type="tel"],
+    form select,
+    form textarea {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #d1d5db;
+        transition: all;
+    }
+    form input[type="text"]:focus,
+    form input[type="email"]:focus,
+    form input[type="password"]:focus,
+    form input[type="tel"]:focus,
+    form select:focus,
+    form textarea:focus {
+        outline: none;
+        border-color:#14B8A6;
+        box-shadow: 0 0 0 1px #14B8A6;
+    }
+
+    form textarea {
+        height: 8rem;
+    }
+
+    /* Style file input */
+    form input[type="file"] {
+        width: 100%;
+        color: #4b5563;
+    }
+    form input[type="file"]::file-selector-button {
+        margin-right: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        border: 0;
+        font-size: 0.875rem;
+        font-weight: 500;
+        background-color: #f3f4f6;
+        color: #374151;
+        transition: background-color 0.2s;
+    }
+    form input[type="file"]::file-selector-button:hover {
+        background-color: #e5e7eb;
+    }
+</style>
+{% endblock %}
