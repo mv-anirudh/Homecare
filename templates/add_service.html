@@ -1,68 +1,116 @@
 {% extends "base.html" %}
-
 {% block content %}
-<div class="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden">
-    <div class="p-6">
-        <h2 class="text-2xl font-bold mb-6">Add Service</h2>
-        
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {% if form.non_field_errors %}
-            <div class="bg-red-50 text-red-500 p-3 rounded-lg">
-                {{ form.non_field_errors }}
-            </div>
-            {% endif %}
-            
-            {% if form.errors %}
-            <div class="bg-red-50 text-red-500 p-3 rounded-lg mb-4">
-                Please correct the errors below.
-            </div>
-            {% endif %}
-
-            <div class="mb-4">
-                <label for="id_category" class="block text-sm font-medium text-gray-700">Category</label>
-                {{ form.category }}
-                {% if form.category.errors %}
-                    <p class="text-red-500 text-sm mt-1">{{ form.category.errors.0 }}</p>
+<div class="min-h-screen bg-gradient-to-b from-teal-50 to-white py-8">
+    <div class="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden border-l-4 border-teal-500">
+        <div class="p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Add Service</h2>
+           
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                <div class="bg-red-50 text-red-500 p-3 rounded-lg mb-4">
+                    {{ form.non_field_errors }}
+                </div>
                 {% endif %}
-            </div>
-
-            <div class="mb-4">
-                <label for="id_name" class="block text-sm font-medium text-gray-700">Service Name</label>
-                {{ form.name }}
-                {% if form.name.errors %}
-                    <p class="text-red-500 text-sm mt-1">{{ form.name.errors.0 }}</p>
+               
+                {% if form.errors %}
+                <div class="bg-red-50 text-red-500 p-3 rounded-lg mb-4">
+                    Please correct the errors below.
+                </div>
                 {% endif %}
+                <div class="mb-4">
+                    <label for="id_category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <div class="border border-gray-300 rounded-md overflow-hidden focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-teal-500">
+                        {{ form.category }}
+                    </div>
+                    {% if form.category.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.category.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    <label for="id_name" class="block text-sm font-medium text-gray-700 mb-1">Service Name</label>
+                    <div class="border border-gray-300 rounded-md overflow-hidden focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-teal-500">
+                        {{ form.name }}
+                    </div>
+                    {% if form.name.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    <label for="id_description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <div class="border border-gray-300 rounded-md overflow-hidden focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-teal-500">
+                        {{ form.description }}
+                    </div>
+                    {% if form.description.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.description.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    <label for="id_base_price" class="block text-sm font-medium text-gray-700 mb-1">Price</label>
+                    <div class="border border-gray-300 rounded-md overflow-hidden focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-teal-500">
+                        {{ form.base_price }}
+                    </div>
+                    {% if form.base_price.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.base_price.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    <label for="id_image" class="block text-sm font-medium text-gray-700 mb-1">Image</label>
+                    <div class="border border-gray-300 rounded-md p-2 focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-teal-500">
+                        {{ form.image }}
+                    </div>
+                    {% if form.image.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.image.errors.0 }}</p>
+                    {% endif %}
+                    <p class="text-gray-500 text-xs mt-1">Upload a high-quality image that represents your service.</p>
+                </div>
+                <button type="submit" class="w-full bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition">
+                    Add Service
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Info Box -->
+    <div class="max-w-md mx-auto mt-6 bg-white shadow-md rounded-lg overflow-hidden border-l-4 border-teal-500">
+        <div class="p-6">
+            <div class="flex items-start">
+                <div class="flex-shrink-0 text-teal-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-gray-800">Service Tips</h3>
+                    <ul class="mt-2 text-xs text-gray-600 space-y-1">
+                        <li>• Be specific about what your service includes</li>
+                        <li>• Set a competitive price based on your experience</li>
+                        <li>• Upload clear images that showcase your service</li>
+                        <li>• Include any special qualifications or certifications</li>
+                    </ul>
+                </div>
             </div>
-
-            <div class="mb-4">
-                <label for="id_description" class="block text-sm font-medium text-gray-700">Description</label>
-                {{ form.description }}
-                {% if form.description.errors %}
-                    <p class="text-red-500 text-sm mt-1">{{ form.description.errors.0 }}</p>
-                {% endif %}
-            </div>
-
-            <div class="mb-4">
-                <label for="id_base_price" class="block text-sm font-medium text-gray-700">Price</label>
-                {{ form.base_price }}
-                {% if form.base_price.errors %}
-                    <p class="text-red-500 text-sm mt-1">{{ form.base_price.errors.0 }}</p>
-                {% endif %}
-            </div>
-
-            <div class="mb-4">
-                <label for="id_image" class="block text-sm font-medium text-gray-700">Image</label>
-                {{ form.image }}
-                {% if form.image.errors %}
-                    <p class="text-red-500 text-sm mt-1">{{ form.image.errors.0 }}</p>
-                {% endif %}
-            </div>
-
-            <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-                Add Service
-            </button>
-        </form>
+        </div>
     </div>
 </div>
+
+<style>
+    /* Additional styling for form fields */
+    input, select, textarea {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        border: none;
+        outline: none;
+    }
+    
+    /* Special styling for file input */
+    input[type="file"] {
+        border: none;
+    }
+
+    /* Focus styling */
+    input:focus, select:focus, textarea:focus {
+        outline: none;
+    }
+</style>
 {% endblock %}

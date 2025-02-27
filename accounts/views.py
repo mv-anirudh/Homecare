@@ -19,6 +19,8 @@ class IndexView(View):
     def get(self,request,*args,**kwargs):
         return render(request,self.template_name)
 
+
+
 # View for handling user registration (sign up)
 class SiginUpView(View):
     tempalte_name="Signup.html"
@@ -64,7 +66,7 @@ class SigninView(View):
                 login(request,user_obj)
                 # Redirect to different pages based on user type
                 if user_obj.user_type == 'service_provider':
-                    return redirect("accounts:service_registration")
+                    return redirect("accounts:provider_dashboard")
                 elif user_obj.user_type == 'customer':
                     return redirect("accounts:customer_dashboard")
                 return redirect("index")
@@ -135,27 +137,28 @@ class ServiceProviderRegistrationView(LoginRequiredMixin, CreateView):
             return self.form_invalid(form)
 
 # Dashboard view for service providers
+# This appears to be a ListView
 class ProviderDashboardView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Booking
-    template_name = 'Service_Dashboard.html'
+    template_name = 'Service_Dashboard.html'  # This should match your template filename
     context_object_name = 'recent_bookings'
-
+    
     # Ensure only service providers can access this view
     def test_func(self):
         return self.request.user.user_type == 'service_provider'
-
+    
     # Get recent bookings for the provider
     def get_queryset(self):
         return Booking.objects.filter(
             provider__user=self.request.user
         ).order_by('-created_at')[:5]
-
+    
     # Add additional context data for the dashboard
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         provider = self.request.user.serviceprovider
         today = datetime.now().date()
-
+        
         # Add scheduling and booking information
         context.update({
             'days_of_week': ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
@@ -172,7 +175,6 @@ class ProviderDashboardView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             'services': Service.objects.filter(provider=provider),
         })
         return context
-    
 
 class CustomerDashboardView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Booking

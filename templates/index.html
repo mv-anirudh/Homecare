@@ -57,6 +57,93 @@
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
+        
+        /* Carousel Styling */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            height: 450px;
+        }
+        
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel-slide.active {
+            opacity: 1;
+        }
+        
+        .carousel-content {
+            max-width: 800px;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 8px;
+        }
+        
+        .carousel-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .carousel-indicator.active {
+            background-color: #14b8a6;
+        }
+        
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            z-index: 10;
+        }
+        
+        .carousel-arrow:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .carousel-arrow.prev {
+            left: 20px;
+        }
+        
+        .carousel-arrow.next {
+            right: 20px;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -77,6 +164,57 @@
             </a>
         </div>
     </nav>
+
+    <!-- Image Carousel Banner -->
+    <div class="carousel-container">
+        <!-- Slide 1 -->
+        <div class="carousel-slide active" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/api/placeholder/1200/450')">
+            <div class="carousel-content">
+                <h2 class="text-3xl font-bold mb-3 text-gray-800">Compassionate Care at Your Fingertips</h2>
+                <p class="text-gray-700">Find the perfect caregiver to meet your unique needs and preferences</p>
+            </div>
+        </div>
+        
+        <!-- Slide 2 -->
+        <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/api/placeholder/1200/450')">
+            <div class="carousel-content">
+                <h2 class="text-3xl font-bold mb-3 text-gray-800">Smart Scheduling & Coordination</h2>
+                <p class="text-gray-700">Our intelligent platform makes managing care schedules effortless</p>
+            </div>
+        </div>
+        
+        <!-- Slide 3 -->
+        <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/api/placeholder/1200/450')">
+            <div class="carousel-content">
+                <h2 class="text-3xl font-bold mb-3 text-gray-800">Vetted Professional Caregivers</h2>
+                <p class="text-gray-700">Our rigorous screening process ensures the highest quality of care</p>
+            </div>
+        </div>
+        
+        <!-- Slide 4 -->
+        <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/api/placeholder/1200/450')">
+            <div class="carousel-content">
+                <h2 class="text-3xl font-bold mb-3 text-gray-800">Peace of Mind for Families</h2>
+                <p class="text-gray-700">Real-time updates and transparent communication keep everyone informed</p>
+            </div>
+        </div>
+        
+        <!-- Navigation Arrows -->
+        <div class="carousel-arrow prev">
+            <i class="fas fa-chevron-left"></i>
+        </div>
+        <div class="carousel-arrow next">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        
+        <!-- Indicators -->
+        <div class="carousel-nav">
+            <div class="carousel-indicator active" data-slide="0"></div>
+            <div class="carousel-indicator" data-slide="1"></div>
+            <div class="carousel-indicator" data-slide="2"></div>
+            <div class="carousel-indicator" data-slide="3"></div>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <header class="container mx-auto px-6 md:px-12 py-16 md:py-24 text-center">
@@ -263,6 +401,68 @@
                 });
                 card.addEventListener('mouseleave', function() {
                     this.classList.remove('shadow-md');
+                });
+            });
+            
+            // Carousel functionality
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            const totalSlides = slides.length;
+            
+            // Function to show specific slide
+            function showSlide(index) {
+                // Handle circular navigation
+                if (index >= totalSlides) index = 0;
+                if (index < 0) index = totalSlides - 1;
+                
+                // Update current slide index
+                currentSlide = index;
+                
+                // Update slides
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i === currentSlide) slide.classList.add('active');
+                });
+                
+                // Update indicators
+                indicators.forEach((indicator, i) => {
+                    indicator.classList.remove('active');
+                    if (i === currentSlide) indicator.classList.add('active');
+                });
+            }
+            
+            // Auto advance slides
+            let slideInterval = setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 5000);
+            
+            // Next button
+            document.querySelector('.carousel-arrow.next').addEventListener('click', () => {
+                clearInterval(slideInterval);
+                showSlide(currentSlide + 1);
+                slideInterval = setInterval(() => {
+                    showSlide(currentSlide + 1);
+                }, 5000);
+            });
+            
+            // Previous button
+            document.querySelector('.carousel-arrow.prev').addEventListener('click', () => {
+                clearInterval(slideInterval);
+                showSlide(currentSlide - 1);
+                slideInterval = setInterval(() => {
+                    showSlide(currentSlide + 1);
+                }, 5000);
+            });
+            
+            // Indicator buttons
+            indicators.forEach((indicator, i) => {
+                indicator.addEventListener('click', () => {
+                    clearInterval(slideInterval);
+                    showSlide(i);
+                    slideInterval = setInterval(() => {
+                        showSlide(currentSlide + 1);
+                    }, 5000);
                 });
             });
         });

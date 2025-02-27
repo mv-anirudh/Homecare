@@ -1,7 +1,8 @@
+from winreg import DeleteKey
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views import View
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView,DeleteView
 from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
@@ -189,7 +190,7 @@ class CreateBookingView(LoginRequiredMixin, CreateView):
             form.instance.provider = self.service.provider
             form.instance.customer = self.request.user
             form.instance.total_amount = self.service.base_price
-            form.instance.status = 'confirmed'
+            form.instance.status = 'pending'
             response = super().form_valid(form)
             messages.success(self.request, 'Service booked successfully!')
             return response
@@ -257,3 +258,37 @@ class AvailabilityView(LoginRequiredMixin, CreateView):
         return super().dispatch(request, *args, **kwargs)
 
 
+class BookingStatusUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Booking
+    fields = ['status']
+    template_name = 'update_booking_status.html'
+    
+    def test_func(self):
+        booking = self.get_object()
+        # Ensure only the service provider can update the booking status
+        return hasattr(self.request.user, 'serviceprovider') and self.request.user.serviceprovider == booking.provider
+    
+    def get_success_url(self):
+        messages.success(self.request, "Booking status updated successfully!")
+        return reverse_lazy('accounts:provider_dashboard')
+    
+
+class CustomerBookingDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Booking
+    template_name = 'customer_delete_booking.html'
+    success_url = reverse_lazy('accounts:customer_dashboard')
+    
+    def test_func(self):
+        booking = self.get_object()
+        # Only allow the customer who made the booking to delete it
+        return self.request.user == booking.customer
+    
+    def delete(self, request, *args, **kwargs):
+        booking = self.get_object()
+        messages.success(request, f"Booking for {booking.service.title} has been cancelled successfully.")
+        return super().delete(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['booking'] = self.get_object()
+        return context

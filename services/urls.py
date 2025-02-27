@@ -11,5 +11,6 @@ urlpatterns = [
     path('service/<int:service_id>/book/', views.CreateBookingView.as_view(), name='create_booking'),
     path('bookings/', views.BookingListView.as_view(), name='booking_list'),
     path('booking/<int:pk>/', views.BookingDetailView.as_view(), name='booking_detail'),
-
+    path('booking/<int:pk>/update-status/', views.BookingStatusUpdateView.as_view(), name='update_booking_status'),
+    path('bookings/<int:pk>/delete/', views.CustomerBookingDeleteView.as_view(), name='customer_delete_booking'),
 ]

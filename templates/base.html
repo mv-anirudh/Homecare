@@ -63,6 +63,7 @@
 <body class="bg-gray-50 flex flex-col min-h-screen">
     <!-- Navigation Bar -->
    <!-- Navigation Bar -->
+<!-- Navigation Bar -->
 <nav class="bg-white shadow-sm py-4 px-6 md:px-12">
     <div class="container mx-auto flex justify-between items-center">
         <a href="{% url 'index' %}" class="text-3xl font-bold">
@@ -84,12 +85,13 @@
                     <a href="" class="text-gray-600 hover:text-teal-500 transition">My Bookings</a>
                 {% elif user.user_type == 'serviceprovider' %}
                     <a href="{% url 'accounts:provider_dashboard' %}" class="text-gray-600 hover:text-teal-500 transition">My Dashboard</a>
-                    <!-- <a href="{% url 'serviceprovider:orders' %}" class="text-gray-600 hover:text-teal-500 transition">Orders</a>
-                    <a href="{% url 'serviceprovider:schedule' %}" class="text-gray-600 hover:text-teal-500 transition">Schedule</a> -->
+                    <a href="{% url 'services:provider_services' %}" class="text-gray-600 hover:text-teal-500 transition">My Services</a>
+                    <a href="{% url 'bookings:provider_bookings' %}" class="text-gray-600 hover:text-teal-500 transition">Bookings</a>
+                    <a href="{% url 'serviceprovider:schedule' %}" class="text-gray-600 hover:text-teal-500 transition">Schedule</a>
                 {% elif user.user_type == 'admin' %}
-                    <a href="" class="text-gray-600 hover:text-teal-500 transition">Admin Dashboard</a>
-                    <a href="" class="text-gray-600 hover:text-teal-500 transition">User Management</a>
-                    <a href="" class="text-gray-600 hover:text-teal-500 transition">Reports</a>
+                    <a href="{% url 'admin:dashboard' %}" class="text-gray-600 hover:text-teal-500 transition">Admin Dashboard</a>
+                    <a href="{% url 'admin:user_management' %}" class="text-gray-600 hover:text-teal-500 transition">User Management</a>
+                    <a href="{% url 'admin:reports' %}" class="text-gray-600 hover:text-teal-500 transition">Reports</a>
                 {% endif %}
                 <a href="" class="text-gray-600 hover:text-teal-500 transition">Support</a>
             {% endif %}
@@ -114,7 +116,7 @@
                                 <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
                             </a>
                         {% elif user.user_type == 'serviceprovider' %}
-                            <a href="{% url 'serviceprovider:dashboard' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"></a>
+                            <a href="{% url 'accounts:provider_dashboard' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                 <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
                             </a>
                         {% elif user.user_type == 'admin' %}
@@ -122,9 +124,7 @@
                                 <i class="fas fa-tachometer-alt mr-2"></i> Admin Panel
                             </a>
                         {% endif %}
-                        <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                            <i class="fas fa-cog mr-2"></i> Settings
-                        </a>
+                       
                         <div class="border-t border-gray-100 my-1"></div>
                         <a href="{% url 'accounts:signout' %}" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
                             <i class="fas fa-sign-out-alt mr-2"></i> Logout
@@ -154,31 +154,32 @@
             
             {% if not user.is_authenticated %}
                 <a href="" class="text-gray-600 hover:text-teal-500 py-2 transition">Features</a>
-                <a href="" class="text-gray-600 hover:text-teal-500
-                <a href="" class="text-gray-600 hover:text-teal-500 py-2 transition">For Caregivers</a>
+                <a href="" class="text-gray-600 hover:text-teal-500 py-2 transition">For Customers</a>
+                <a href="" class="text-gray-600 hover:text-teal-500 py-2 transition">For Service Providers</a>
                 <a href="" class="text-gray-600 hover:text-teal-500 py-2 transition">About</a>
                 <div class="border-t border-gray-100 my-1"></div>
                 <a href="{% url 'accounts:signup' %}" class="text-teal-500 font-medium py-2 transition">Sign Up</a>
             {% else %}
                 {% if user.user_type == 'customer' %}
                     <a href="{% url 'accounts:customer_dashboard' %}" class="text-gray-600 hover:text-teal-500 py-2 transition">My Dashboard</a>
-                {% elif user.user_type == 'caregiver' %}
+                    <a href="{% url 'services:service_list' %}" class="text-gray-600 hover:text-teal-500 py-2 transition">Services</a>
+                    <a href="" class="text-gray-600 hover:text-teal-500 py-2 transition">My Bookings</a>
+                {% elif user.user_type == 'serviceprovider' %}
                     <a href="{% url 'accounts:provider_dashboard' %}" class="text-gray-600 hover:text-teal-500 py-2 transition">My Dashboard</a>
-                    <!-- <a href="{% url 'caregiver:clients' %}" class="text-gray-600 hover:text-teal-500 py-2 transition">My Clients</a>
-                    <a href="{% url 'caregiver:schedule' %}" class="text-gray-600 hover:text-teal-500 py-2 transition">Schedule</a> -->
+                    <a href="{% url 'services:provider_services' %}" class="text-gray-600 hover:text-teal-500 py-2 transition">My Services</a>
+                    <a href="{% url 'bookings:provider_bookings' %}" class="text-gray-600 hover:text-teal-500 py-2 transition">Bookings</a>
+                    <a href="{% url 'serviceprovider:schedule' %}" class="text-gray-600 hover:text-teal-500 py-2 transition">Schedule</a>
                 {% elif user.user_type == 'admin' %}
-                    <a href="" class="text-gray-600 hover:text-teal-500 py-2 transition">Admin Dashboard</a>
-                    <a href="" class="text-gray-600 hover:text-teal-500 py-2 transition">User Management</a>
-                    <a href="" class="text-gray-600 hover:text-teal-500 py-2 transition">Reports</a>
+                    <a href="{% url 'admin:dashboard' %}" class="text-gray-600 hover:text-teal-500 py-2 transition">Admin Dashboard</a>
+                    <a href="{% url 'admin:user_management' %}" class="text-gray-600 hover:text-teal-500 py-2 transition">User Management</a>
+                    <a href="{% url 'admin:reports' %}" class="text-gray-600 hover:text-teal-500 py-2 transition">Reports</a>
                 {% endif %}
                 <a href="" class="text-gray-600 hover:text-teal-500 py-2 transition">Support</a>
                 <div class="border-t border-gray-100 my-1"></div>
                 <a href="" class="text-gray-600 hover:text-teal-500 py-2 transition">
                     <i class="fas fa-user mr-2"></i> My Profile
                 </a>
-                <a href="" class="text-gray-600 hover:text-teal-500 py-2 transition">
-                    <i class="fas fa-cog mr-2"></i> Settings
-                </a>
+                
                 <a href="{% url 'accounts:signout' %}" class="text-red-600 hover:text-red-700 py-2 transition">
                     <i class="fas fa-sign-out-alt mr-2"></i> Logout
                 </a>

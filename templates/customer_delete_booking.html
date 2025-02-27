@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Cancel Booking{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">Cancel Booking</h3>
+                </div>
+                <div class="card-body">
+                    <h5 class="mb-3">Are you sure you want to cancel this booking?</h5>
+                    
+                    <div class="booking-details mb-4 p-3 bg-light rounded">
+                        <  <h3 class="font-medium text-lg text-gray-800">{{ booking.service.name}}</h3>
+                        <p class="text-gray-600">Provider: {{ booking.provider.user.get_full_name}}</p>
+                        <p class="text-gray-600">Date & Time: {{ booking.booking_date|date:"Y-m-d" }} at {{ booking.booking_time|time:"H:i" }}</p>
+                        <p class="text-gray-600">Location: {{ booking.service_location }}</p>
+                        <p class="text-gray-600">Phone: {{ booking.provider.user.phone_number }}</p>
+                        <p class="text-gray-600">Status: 
+                            <span class="{% if booking.status == 'confirmed' %}text-teal-600{% elif booking.status == 'pending' %}text-amber-600{% elif booking.status == 'cancelled' %}text-red-600{% endif %}">
+                                {{ booking.status|title }}
+                            </span>
+                        </p>
+                    </div>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'accounts:customer_dashboard' %}" class="btn btn-secondary">
+                                Go Back
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                Confirm Cancellation
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
